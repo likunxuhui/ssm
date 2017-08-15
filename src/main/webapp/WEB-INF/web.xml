@@ -40,4 +40,14 @@
         <servlet-name>springMVC</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>myServlet</servlet-name>
+        <servlet-class>com.likun.servlet.SingleServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myServlet</servlet-name>
+        <url-pattern>/myServlet.do</url-pattern>
+    </servlet-mapping>
 </web-app>
