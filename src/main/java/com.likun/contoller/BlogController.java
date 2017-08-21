@@ -1,5 +1,6 @@
 package com.likun.contoller;
 
+import com.likun.dao.BlogMapper;
 import com.likun.dao.BookDao;
 import com.likun.entity.Book;
 import com.likun.service.BookService;
@@ -19,31 +20,36 @@ import java.util.Date;
  *
  */
 @Controller
-public class TestController {
+@RequestMapping(value = "/blog")
+public class BlogController {
 
     @Autowired
-    BookService bookService;
-	
-	@ResponseBody
-	@RequestMapping(value = "/init",produces = MediaType.APPLICATION_JSON_VALUE)
-    public String init(Model model,@RequestParam(value="code",required = true,defaultValue = "123")String test,  HttpServletResponse res, HttpServletRequest req) {
-        System.out.println(test);
-       return "index";
+    BlogMapper blogMapper;
+
+    @ResponseBody
+    @RequestMapping(value = "/ass",produces = MediaType.APPLICATION_JSON_VALUE)
+    public Object init() {
+
+        return blogMapper.selectBlogVO();
     }
 
-    @RequestMapping(value = "/init2",  produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    @RequestMapping(value = "/col",  produces = MediaType.APPLICATION_JSON_VALUE)
     public String init2(Model model, HttpServletResponse res, HttpServletRequest req) {
 
-        bookService.add();
+
 
         return "index";
     }
 
     @ResponseBody
-    @RequestMapping(value = "/test",  produces = MediaType.APPLICATION_JSON_VALUE)
-    public String test(Model model, HttpServletResponse res, HttpServletRequest req) {
+    @RequestMapping(value = "/full",  produces = MediaType.APPLICATION_JSON_VALUE)
+    public Object init3() {
 
-        return "web:************86*****************";
+
+
+        return blogMapper.selectFullBlogVO();
     }
+
 
 }

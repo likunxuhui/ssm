@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.likun.dao.BlogMapper" >
+  <resultMap id="BaseResultMap" type="com.likun.entity.Blog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="author_id" property="author_id" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="assResultMap" type="com.likun.entity.vo.BlogVO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="author_id" property="author_id" jdbcType="INTEGER" />
+    <association property="author" column="author_id" javaType="com.likun.entity.Author">
+      <id column="a_id" property="id" jdbcType="INTEGER" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+      <result column="gender" property="gender" jdbcType="VARCHAR" />
+    </association>
+  </resultMap>
+
+  <resultMap id="ResultMap" type="com.likun.entity.vo.BlogVO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="author_id" property="author_id" jdbcType="INTEGER" />
+    <association property="author" column="author_id" javaType="com.likun.entity.Author">
+      <id column="a_id" property="id" jdbcType="INTEGER" />
+      <result column="name" property="name" jdbcType="VARCHAR" />
+      <result column="gender" property="gender" jdbcType="VARCHAR" />
+    </association>
+    <collection property="posts" column="id" ofType="com.likun.entity.Post">
+      <id column="p_id" property="id" jdbcType="INTEGER" />
+      <result column="context" property="context" jdbcType="VARCHAR" />
+      <result column="blog_id" property="blog_id" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, title, author_id
+  </sql>
+
+
+  <!--一对一关联查询-->
+  <select id="selectBlogVO" resultMap="assResultMap">
+    select b.*,a.id as a_id,a.name,a.gender gender from blog b left join author  a on b.author_id=a.id
+  </select>
+
+  <select id="selectFullBlogVO" resultMap="ResultMap">
+    select t.*,p.id as p_id ,p.context,p.blog_id
+    from
+    (select b.*,a.id as a_id,a.name,a.gender  from blog b left join author  a  on b.author_id=a.id ) t left join post p
+    on t.id = p.blog_id;
+  </select>
+
+</mapper>
