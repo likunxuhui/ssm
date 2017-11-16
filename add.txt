@@ -1,7 +1,10 @@
-#servlet访问路径：
+﻿#servlet访问路径：
 http://localhost:8080/ssm/myServlet.do?message=Hello
 http://localhost:8080/ssm/myServlet.do?message=World
 
 #controller访问路径：
 http://localhost:8080/ssm/single/a?message=Hello
 http://localhost:8080/ssm/single/b?message=World
+
+
+test
